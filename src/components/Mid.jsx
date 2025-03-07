@@ -33,7 +33,6 @@ export function Mid () {
   function handleCount(type) {
     
     handleMood(type);
-    console.log(type)
 
     if (mood === null) 
       return;
@@ -62,39 +61,6 @@ export function Mid () {
     setShowResult(true);
   }
  
-
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const clientId = "1495429c8d3349eb950c91afcc906e88";
-        const clientSecret = "c14155599eb643abb748cf6e8ce46cbd";
-
-        const res = await fetch("https://accounts.spotify.com/api/token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            grant_type: "client_credentials",
-            client_id: clientId,
-            client_secret: clientSecret,
-          }),
-          
-        });
-
-        const data = await res.json();
-        //console.log("Access Token: ", data.access_token);
-        console.log(data);
-        setToken(data.access_token);
-      } catch (error) {
-        console.error("Error getting token", error);
-      }
-    };
-
-    getToken();
-  }, []);
-
-  
   const handlePlaylist = async () => {
     try {
       const res = await fetch("./api/spotify");

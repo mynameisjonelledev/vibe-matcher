@@ -36,6 +36,12 @@ export default async function handler(req, res) {
       }
     );
 
+    if (!spotifyRes.ok) {
+      return res.status(spotifyRes.status).json({
+        error: `Error from Spotify: ${spotifyRes.statusText}`,
+      });
+    }
+
     if (playlistResponse.status === 429) {
       const retryAfter = playlistResponse.headers.get('Retry-After') || 5;
       console.warn(`Rate limited. Retry after ${retryAfter} seconds.`);
