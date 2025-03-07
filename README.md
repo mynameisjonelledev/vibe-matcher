@@ -1,13 +1,10 @@
 # 🎵 Vibe Matcher
 Find your perfect music match based on your mood! 🎧
 
-![Vibe Matcher Screenshot](https://postimg.cc/3y1G89Hz) 
----
 
 ## 📌 Overview
 **Vibe Matcher** is a fun web app where users select their mood, and the app generates a **random track** from a curated **Spotify playlist**. Whether you're feeling happy, chill, or hyped—there's always a perfect song waiting!
 
----
 
 ## 🌟 Features
 ✅ Select your **mood** and get a matching song  
