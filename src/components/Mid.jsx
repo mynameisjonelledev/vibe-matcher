@@ -61,12 +61,14 @@ export function Mid () {
     setShowResult(true);
   }
  
-  const handlePlaylist = async () => {
+  async function handlePlaylist() {
     try {
-      const res = await fetch("./api/spotify");
-      const track = await res.json();
+      const res = await fetch("/api/spotify");
+      if (!res.ok) throw new Error("Failed to fetch track");
+      const trackData = await res.json();
+      console.log("🎵 Track: ", trackData);
 
-      if (res.ok) {
+     /* if (res.ok) {
         console.log("🎵 Random Track: ", track);
         setTrackName(track.name);
         setArtistName(track.artist);
@@ -75,7 +77,7 @@ export function Mid () {
         setResultsShow(true);
       } else {
         console.error('Error fetching track: ', track.error);
-      }
+      } */
 
       } catch(error) {
         console.error('Fetch error: ', error);

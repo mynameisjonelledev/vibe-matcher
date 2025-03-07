@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
     // 3. Fetch Tracks from the Playlist
     const playlistResponse = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`,
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -36,41 +36,37 @@ export default async function handler(req, res) {
       }
     );
 
-    if (!spotifyRes.ok) {
-      return res.status(spotifyRes.status).json({
-        error: `Error from Spotify: ${spotifyRes.statusText}`,
-      });
-    }
-
-    if (playlistResponse.status === 429) {
-      const retryAfter = playlistResponse.headers.get('Retry-After') || 5;
-      console.warn(`Rate limited. Retry after ${retryAfter} seconds.`);
-      return res.status(429).json({ error: "Rate limited. Try again later." });
+    if (!playlistResponse.ok) {
+      const playlistError = await playlistResponse.text();
+      console.error("Playlist Fetch Error: ", playlistError);
+      return res.status(500).json({ error: "Failed to fetch playlist." });
     }
 
     const playlistData = await playlistResponse.json();
 
-    // 4. Ensure Tracks Exist
     if (!playlistData.items || playlistData.items.length === 0) {
       return res.status(404).json({ error: "No tracks found in the playlist." });
     }
 
-    // 5. Randomly Select a Track
-    const randomTrack = playlistData.items[Math.floor(Math.random() * playlistData.items.length)];
+    // 4. Randomly Select a Track
+    const randomTrack = playlistData.items[
+      Math.floor(Math.random() * playlistData.items.length)
+    ];
+
     const track = {
-      name: randomTrack?.track?.name || "Unknown Title",
-      artist: randomTrack?.track?.artists?.[0]?.name || "Unknown Artist",
-      url: randomTrack?.track?.external_urls?.spotify || "",
-      image: randomTrack?.track?.album?.images?.[0]?.url || "",
+      name: randomTrack.track.name || "Unknown Title",
+      artist: randomTrack.track.artists[0].name || "Unknown Artist",
+      url: randomTrack.track.external_urls.spotify || "",
+      image: randomTrack.track.album.images[0].url || "",
     };
 
     console.log("Selected Track: ", track);
 
-    // 6. Return the Random Track
-    res.status(200).json(track);
+    // 5. Return the Random Track
+    return res.status(200).json(track);
 
   } catch (error) {
     console.error("Error in Spotify handler:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
