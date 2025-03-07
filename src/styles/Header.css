@@ -1,0 +1,22 @@
+.top-div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.title-top-div {
+  font-family: Pattaya;
+  font-size: 50px;
+  transition: transform 0.8s;
+}
+
+.title-top-div:hover {
+  color: #ffd60a;
+  cursor: pointer;
+}
+
+.subtitle-top-div {
+  font-style: italic;
+  cursor: default;
+}

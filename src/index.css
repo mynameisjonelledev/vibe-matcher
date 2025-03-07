@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+}
+
+body {
+  font-family: Inter, Roboto, Arial;
+  background-color: #0b090a;
+  color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
