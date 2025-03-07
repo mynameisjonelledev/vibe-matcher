@@ -1,0 +1,13 @@
+.footer-con {
+  font-size: 15px;
+
+  position: fixed;
+  bottom: 0%;
+  right: 42%;
+  left: 42%;
+  padding-bottom: 10px;
+}
+
+.footer-heart {
+  vertical-align: middle;
+}
