@@ -73,6 +73,8 @@ export function Mid () {
       setTrackUrl(trackData.url);
 
       setResultsShow(true);
+      resultRef.current?.scrollIntoView({ behavior: "smooth" });
+    
 
       } catch(error) {
         console.error('Fetch error: ', error);
