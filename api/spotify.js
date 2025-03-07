@@ -1,7 +1,8 @@
 export default async function handler(req, res) {
   try {
-    const clientId = process.env.SPOTIFY_CLIENT_ID;
-    const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+    console.log("🔍 Environment Variables:");
+    console.log("CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID);
+    console.log("CLIENT_SECRET:", process.env.SPOTIFY_CLIENT_SECRET);
 
     // 1. Get Spotify Access Token
     const authResponse = await fetch("https://accounts.spotify.com/api/token", {
@@ -11,13 +12,21 @@ export default async function handler(req, res) {
       },
       body: new URLSearchParams({
         grant_type: "client_credentials",
-        client_id: clientId,
-        client_secret: clientSecret,
+        client_id: process.env.SPOTIFY_CLIENT_ID,
+        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
       }),
     });
 
+    if (!authResponse.ok) {
+      const errorText = await authResponse.text();
+      console.error("🚨 Auth Error Response: ", errorText);
+      return res.status(500).json({ error: "Failed to get Spotify token." });
+    }
+
     const authData = await authResponse.json();
     const token = authData.access_token;
+
+    console.log("✅ Access Token Received:", token);
 
     if (!token) {
       return res.status(500).json({ error: "Failed to retrieve Spotify token." });
@@ -38,7 +47,7 @@ export default async function handler(req, res) {
 
     if (!playlistResponse.ok) {
       const playlistError = await playlistResponse.text();
-      console.error("Playlist Fetch Error: ", playlistError);
+      console.error("🚨 Playlist Fetch Error: ", playlistError);
       return res.status(500).json({ error: "Failed to fetch playlist." });
     }
 
@@ -60,13 +69,13 @@ export default async function handler(req, res) {
       image: randomTrack.track.album.images[0].url || "",
     };
 
-    console.log("Selected Track: ", track);
+    console.log("🎵 Selected Track: ", track);
 
     // 5. Return the Random Track
     return res.status(200).json(track);
 
   } catch (error) {
-    console.error("Error in Spotify handler:", error);
+    console.error("🔥 Error in Spotify handler:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
