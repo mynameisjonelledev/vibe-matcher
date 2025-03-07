@@ -146,13 +146,13 @@ export function Mid () {
       
       /> : null}
 
-    <Results 
+    { trackUrl && artistName && trackName ? (<Results 
       url={trackUrl}
       track={trackName}
       artist={artistName}
       cover={albumPicture}
       resultRef={resultRef}
-      />
+      />) : null} 
     </>
   );
 }
