@@ -6,7 +6,7 @@ export function GenerateBtn(props) {
   return (
  <section className="generate-btn-con">
     <div className="button-div">
-      <button className="generate" id="generate"  onClick={props.playlist}>Gimme a beat </button>
+      <button className="generate" id="generate"  onClick={props.playlist}>🎵 Gimme a beat </button>
     </div>
     
     </section>

@@ -23,8 +23,8 @@ export function Results(props) {
       </div>) : null }
 
       <div className="results-name">
-        <div className="results-name-title">{props.track}</div>
-        <div className="results-artist">{props.artist}</div>
+        <div className="results-name-title">Song Title:{props.track}</div>
+        <div className="results-artist">Artist:{props.artist}</div>
       </div>
 
       <div className="results-url-con">

@@ -68,16 +68,11 @@ export function Mid () {
       const trackData = await res.json();
       console.log("🎵 Track: ", trackData);
 
-     /* if (res.ok) {
-        console.log("🎵 Random Track: ", track);
-        setTrackName(track.name);
-        setArtistName(track.artist);
-        setTrackUrl(track.url);
-        setAlbumPicture(track.image);
-        setResultsShow(true);
-      } else {
-        console.error('Error fetching track: ', track.error);
-      } */
+      setTrackName(trackData.name || 'No Track Found');
+      setArtistName(trackData.artist || 'No Artist Found');
+      setTrackUrl(trackData.url);
+
+      setResultsShow(true);
 
       } catch(error) {
         console.error('Fetch error: ', error);
